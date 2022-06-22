@@ -1,7 +1,6 @@
 /**
  * Example code related to 2341 final project for summer 2022
  */
-
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -10,6 +9,8 @@
 //RapidJSON headers we need for our parsing.
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/document.h"
+
+#include "BinarySearchTree.h"
 
 using namespace rapidjson;
 using std::cout;
@@ -26,16 +27,29 @@ void testReadJsonFile(const char* fileName);
 
 int main() {
 
-    cout << "-------------------------------------------" << endl;
-    cout << "------ RapidJSON Doc Parsing Example ------" << endl;
-    cout << "-------------------------------------------" << endl;
-    testReadJsonFile("sample_data/news_0064567.json");
+//    cout << "-------------------------------------------" << endl;
+//    cout << "------ RapidJSON Doc Parsing Example ------" << endl;
+//    cout << "-------------------------------------------" << endl;
+//    testReadJsonFile("sample_data/news_0064567.json");
+//
+//    cout << "\n";
+//    cout << "-------------------------------------------" << endl;
+//    cout << "------     File System Example       ------" << endl;
+//    cout << "-------------------------------------------" << endl;
+//    testFileSystem("sample_data/");
 
     cout << "\n";
     cout << "-------------------------------------------" << endl;
-    cout << "------     File System Example       ------" << endl;
+    cout << "------      Binary Search Tree       ------" << endl;
     cout << "-------------------------------------------" << endl;
-    testFileSystem("sample_data/");
+    BinarySearchTree<int, int> bst;
+    bst.insert(3, 10);
+    bst.insert(5, 20);
+    bst.insert(1, 30);
+    bst.insert(8, 80);
+    bst.insert(10, 90);
+    bst.insert(4, 40);
+    bst.print();
 
     return 0;
 }

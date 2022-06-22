@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 file(COPY sample_data/ DESTINATION sample_data/)
 
-add_executable(rapidJSONExample main.cpp)
+add_executable(rapidJSONExample main.cpp BinarySearchTree.h)
 target_include_directories(rapidJSONExample PRIVATE rapidjson/)
