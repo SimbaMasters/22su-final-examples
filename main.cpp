@@ -16,22 +16,33 @@ using std::left;
 
 using std::filesystem::recursive_directory_iterator;
 
-void testFileSystem(const char* path) {
-
-    auto it = recursive_directory_iterator(path);
-    for(const auto& entry : it) {
-
-        if (entry.is_regular_file() && entry.path().extension().string() == ".json") {
-
-            cout << entry.path() << endl;
-
-        }
-
-    }
+//Function Prototypes
+void testFileSystem(const char* path);
+void testReadJsonFile(const char* fileName);
 
 
+int main() {
+
+    cout << "-------------------------------------------" << endl;
+    cout << "------ RapidJSON Doc Parsing Example ------" << endl;
+    cout << "-------------------------------------------" << endl;
+    testReadJsonFile("sample_data/news_0064567.json");
+
+    cout << "\n";
+    cout << "-------------------------------------------" << endl;
+    cout << "------     File System Example       ------" << endl;
+    cout << "-------------------------------------------" << endl;
+    testFileSystem("sample_data/");
+
+    return 0;
 }
 
+
+/**
+ * example code that reads and parses a json file and extracts the title and person
+ * entities.
+ * @param fileName filename with relative or absolute path included.
+ */
 void testReadJsonFile(const char* fileName) {
 
     //open an ifstream on the file of interest and check that it could be opened.
@@ -65,21 +76,38 @@ void testReadJsonFile(const char* fileName) {
     //We iterate over the Array returned from the line above.  Each element kind of operates like
     // a little JSON document object in that you can use the same subscript notation
     // to access particular values.
+    cout << "  Person Entities:" << endl;
     for (auto& p : persons) {
-        cout << "  >" << setw(30) << left << p["name"].GetString()
-                      << setw(10) << left << p["sentiment"].GetString() << endl;
+        cout << "    > " << setw(30) << left << p["name"].GetString()
+             << setw(10) << left << p["sentiment"].GetString() << endl;
     }
 
     input.close();
 }
 
 
-int main() {
+/**
+ * example code for how to traverse the filesystem using std::filesystem
+ * @param path an absolute or relative path to a folder containing files
+ * you want to parse.
+ */
+void testFileSystem(const char* path) {
 
-    cout << "\n----- RapidJSON Doc Parsing Example -----" << endl;
-    testReadJsonFile("sample_data/news_0064567.json");
-    cout << "\n----- File System Example -----" << endl;
-    testFileSystem("sample_data/");
+    //recursive_director_iterator used to "access" folder at parameter -path-
+    //we are using the recursive iterator so it will go into subfolders.
+    auto it = std::filesystem::recursive_directory_iterator(path);
 
-    return 0;
+    //loop over all the entries.
+    for(const auto& entry : it) {
+
+        cout << "--- " << setw(60) << left << entry.path().c_str() << " ---" << endl;
+
+        //We only want to attempt to parse files that end with .json...
+        if (entry.is_regular_file() && entry.path().extension().string() == ".json") {
+            testReadJsonFile(entry.path().c_str());
+        }
+
+    }
+
+
 }
