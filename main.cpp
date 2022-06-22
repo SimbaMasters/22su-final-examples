@@ -14,6 +14,24 @@ using std::ifstream;
 using std::setw;
 using std::left;
 
+using std::filesystem::recursive_directory_iterator;
+
+void testFileSystem(const char* path) {
+
+    auto it = recursive_directory_iterator(path);
+    for(const auto& entry : it) {
+
+        if (entry.is_regular_file() && entry.path().extension().string() == ".json") {
+
+            cout << entry.path() << endl;
+
+        }
+
+    }
+
+
+}
+
 void testReadJsonFile(const char* fileName) {
 
     //open an ifstream on the file of interest and check that it could be opened.
@@ -58,6 +76,10 @@ void testReadJsonFile(const char* fileName) {
 
 int main() {
 
+    cout << "\n----- RapidJSON Doc Parsing Example -----" << endl;
     testReadJsonFile("sample_data/news_0064567.json");
+    cout << "\n----- File System Example -----" << endl;
+    testFileSystem("sample_data/");
+
     return 0;
 }
