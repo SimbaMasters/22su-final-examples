@@ -1,8 +1,13 @@
+/**
+ * Example code related to 2341 final project for summer 2022
+ */
+
 #include <iostream>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 
+//RapidJSON headers we need for our parsing.
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/document.h"
 
@@ -13,8 +18,6 @@ using std::cin;
 using std::ifstream;
 using std::setw;
 using std::left;
-
-using std::filesystem::recursive_directory_iterator;
 
 //Function Prototypes
 void testFileSystem(const char* path);
